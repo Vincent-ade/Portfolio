@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useState } from 'react';
 import { ArrowRight, ExternalLink, Menu, Search, X } from 'lucide-react';
+import { useLocation } from 'wouter';
 
 type Resource = {
   category: 'Career prep' | 'Internships' | 'Building';
@@ -47,11 +48,56 @@ function SocialIcon({ kind }: { kind: 'instagram' | 'linkedin' | 'youtube' | 'ma
   return <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2" /><path d="m4 7 8 6 8-6" /></svg>;
 }
 
-function App() {
+function ResourceLibrary() {
   const [activeCategory, setActiveCategory] = useState('Everything');
   const [searchTerm, setSearchTerm] = useState('');
+
+  const visibleResources = useMemo(() => {
+    const query = searchTerm.trim().toLowerCase();
+    return resources.filter((resource) => {
+      const categoryMatch = activeCategory === 'Everything' || resource.category === activeCategory;
+      const searchMatch = !query || `${resource.title} ${resource.description} ${resource.category} ${resource.type}`.toLowerCase().includes(query);
+      return categoryMatch && searchMatch;
+    });
+  }, [activeCategory, searchTerm]);
+
+  return (
+    <section className="vincent-section vincent-resources" aria-labelledby="resources-heading">
+      <div className="vincent-resources-heading">
+        <div><p className="vincent-section-label">The resource library</p><h1 id="resources-heading">Useful things for your next step.</h1></div>
+        <p className="vincent-resource-intro">Notes from the messy middle, made practical. Start with what you need today; you can come back for the rest.</p>
+      </div>
+      <div className="vincent-tools">
+        <div className="vincent-filters" role="group" aria-label="Filter resources by topic">
+          {categories.map((category) => <button className={`vincent-filter${activeCategory === category ? ' active' : ''}`} key={category} type="button" aria-pressed={activeCategory === category} onClick={() => setActiveCategory(category)} data-testid={`filter-${category.toLowerCase().replaceAll(' ', '-')}`}>{category}</button>)}
+        </div>
+        <label className="vincent-search"><Search aria-hidden="true" /><span className="sr-only">Search resources</span><input type="search" value={searchTerm} onChange={(event) => setSearchTerm(event.target.value)} placeholder="Search resources" aria-label="Search resources" data-testid="input-resource-search" /></label>
+      </div>
+      <div className="vincent-resource-list" aria-live="polite" aria-relevant="additions text">
+        {visibleResources.map((resource, index) => (
+          <article className="vincent-resource" key={resource.title} data-testid={`resource-${index + 1}`}>
+            <span className="vincent-resource-number">{String(index + 1).padStart(2, '0')}</span>
+            <a className="vincent-resource-link" href={resource.url} target="_blank" rel="noopener noreferrer" aria-label={`${resource.title} — opens in a new tab`}>
+              <div><h3>{resource.title}</h3><p>{resource.description}</p><div className="vincent-resource-type">{resource.type} · {resource.category}</div></div>
+              <span className="vincent-resource-mark" aria-hidden="true"><ExternalLink size={16} /></span>
+            </a>
+          </article>
+        ))}
+        {visibleResources.length === 0 && <div className="vincent-empty" role="status"><strong>No resources found just yet.</strong>Try a different search or choose another topic.</div>}
+      </div>
+      <div className="vincent-roadmap">
+        <div><small>Coming together now</small><h3>A more human roadmap into tech.</h3><p>A guided collection of the steps I wish I could hand my past self: choosing a direction, building proof, and finding people who get it.</p></div>
+        <a className="vincent-button" href="https://cs-roadmap-waitlist.vincentalanagonzales.chatgpt.site/" target="_blank" rel="noopener noreferrer">Join the early list <ArrowRight aria-hidden="true" /></a>
+      </div>
+    </section>
+  );
+}
+
+function App() {
+  const [location] = useLocation();
   const [menuOpen, setMenuOpen] = useState(false);
   const [headerVisible, setHeaderVisible] = useState(true);
+  const isResourcesPage = location === '/resources';
 
   useEffect(() => {
     let previousScrollY = window.scrollY;
@@ -81,37 +127,30 @@ function App() {
     return () => window.removeEventListener('keydown', closeOnEscape);
   }, [menuOpen]);
 
-  const visibleResources = useMemo(() => {
-    const query = searchTerm.trim().toLowerCase();
-    return resources.filter((resource) => {
-      const categoryMatch = activeCategory === 'Everything' || resource.category === activeCategory;
-      const searchMatch = !query || `${resource.title} ${resource.description} ${resource.category} ${resource.type}`.toLowerCase().includes(query);
-      return categoryMatch && searchMatch;
-    });
-  }, [activeCategory, searchTerm]);
-
   const closeMenu = () => setMenuOpen(false);
+  const sectionHref = (section: string) => isResourcesPage ? `/#${section}` : `#${section}`;
 
   return (
     <div className="vincent-page">
       <div className="vincent-frame">
         <header className={`vincent-header${headerVisible ? '' : ' is-hidden'}`}>
-          <a className="vincent-brand" href="#top" aria-label="Vincent Dada home" onClick={closeMenu} data-testid="link-home">
+          <a className="vincent-brand" href={sectionHref('top')} aria-label="Vincent Dada home" onClick={closeMenu} data-testid="link-home">
             <ComputerMark /><span className="vincent-wordmark">Dada Vincent</span>
           </a>
           <button className="vincent-menu-toggle" type="button" aria-label={menuOpen ? 'Close menu' : 'Open menu'} aria-expanded={menuOpen} aria-controls="main-navigation" onClick={() => setMenuOpen((open) => !open)} data-testid="button-mobile-menu">
             {menuOpen ? <X aria-hidden="true" /> : <Menu aria-hidden="true" />}
           </button>
           <nav id="main-navigation" className={`vincent-nav${menuOpen ? ' open' : ''}`} aria-label="Main navigation">
-            <a onClick={closeMenu} href="#about">About</a>
-            <a onClick={closeMenu} href="#cohort">Cohort</a>
-            <a onClick={closeMenu} href="#resources">Resources</a>
-            <a onClick={closeMenu} href="#work">Work with me</a>
+            <a onClick={closeMenu} href={sectionHref('about')}>About</a>
+            <a onClick={closeMenu} href={sectionHref('cohort')}>Cohort</a>
+            <a onClick={closeMenu} href="/resources" aria-current={isResourcesPage ? 'page' : undefined}>Resources</a>
+            <a onClick={closeMenu} href={sectionHref('work')}>Work with me</a>
             <a className="vincent-nav-cta" onClick={closeMenu} href={SUBSTACK} target="_blank" rel="noopener noreferrer">Get the newsletter</a>
           </nav>
         </header>
 
         <main id="top">
+          {isResourcesPage ? <ResourceLibrary /> : <>
           <section className="vincent-hero" aria-labelledby="hero-heading">
             <div className="vincent-socials" aria-label="Social links">
               <a className="vincent-social-link" href="https://www.instagram.com/dadavincent_/" target="_blank" rel="noopener noreferrer" aria-label="Instagram (opens in a new tab)" data-testid="link-instagram"><SocialIcon kind="instagram" /></a>
@@ -151,35 +190,6 @@ function App() {
             </div>
           </section>
 
-          <section className="vincent-section vincent-resources" id="resources">
-            <div className="vincent-resources-heading">
-              <div><p className="vincent-section-label">The resource library</p><h2>Useful things for your next step.</h2></div>
-              <p className="vincent-resource-intro">Notes from the messy middle, made practical. Start with what you need today; you can come back for the rest.</p>
-            </div>
-            <div className="vincent-tools">
-              <div className="vincent-filters" role="group" aria-label="Filter resources by topic">
-                {categories.map((category) => <button className={`vincent-filter${activeCategory === category ? ' active' : ''}`} key={category} type="button" aria-pressed={activeCategory === category} onClick={() => setActiveCategory(category)} data-testid={`filter-${category.toLowerCase().replaceAll(' ', '-')}`}>{category}</button>)}
-              </div>
-              <label className="vincent-search"><Search aria-hidden="true" /><span className="sr-only">Search resources</span><input type="search" value={searchTerm} onChange={(event) => setSearchTerm(event.target.value)} placeholder="Search resources" aria-label="Search resources" data-testid="input-resource-search" /></label>
-            </div>
-            <div className="vincent-resource-list" aria-live="polite" aria-relevant="additions text">
-              {visibleResources.map((resource, index) => (
-                <article className="vincent-resource" key={resource.title} data-testid={`resource-${index + 1}`}>
-                  <span className="vincent-resource-number">{String(index + 1).padStart(2, '0')}</span>
-                  <a className="vincent-resource-link" href={resource.url} target="_blank" rel="noopener noreferrer" aria-label={`${resource.title} — opens in a new tab`}>
-                    <div><h3>{resource.title}</h3><p>{resource.description}</p><div className="vincent-resource-type">{resource.type} · {resource.category}</div></div>
-                    <span className="vincent-resource-mark" aria-hidden="true"><ExternalLink size={16} /></span>
-                  </a>
-                </article>
-              ))}
-              {visibleResources.length === 0 && <div className="vincent-empty" role="status"><strong>No resources found just yet.</strong>Try a different search or choose another topic.</div>}
-            </div>
-            <div className="vincent-roadmap">
-              <div><small>Coming together now</small><h3>A more human roadmap into tech.</h3><p>A guided collection of the steps I wish I could hand my past self: choosing a direction, building proof, and finding people who get it.</p></div>
-              <a className="vincent-button" href="https://cs-roadmap-waitlist.vincentalanagonzales.chatgpt.site/" target="_blank" rel="noopener noreferrer">Join the early list <ArrowRight aria-hidden="true" /></a>
-            </div>
-          </section>
-
           <section className="vincent-newsletter" id="newsletter">
             <div className="vincent-newsletter-inner">
               <div><p className="vincent-section-label">A note from me to you</p><h2>Good things take a few drafts.</h2><p className="vincent-newsletter-copy">A short, occasional letter with new resources, honest lessons, and little things I’m making. No noise; just something useful to take with you.</p></div>
@@ -199,12 +209,13 @@ function App() {
               <p style={{ marginTop: 22, fontSize: 13 }}>For Cohort partnerships, reach <a href="/">David at Cohort Growth Labs</a>.</p>
             </div>
           </section>
+          </>}
         </main>
 
         <footer className="vincent-footer">
-          <a className="vincent-brand" href="#top" aria-label="Vincent Gonzales — back to top"><ComputerMark /><span className="vincent-wordmark">Dada Vincent</span></a>
+          <a className="vincent-brand" href={sectionHref('top')} aria-label="Vincent Gonzales — back to top"><ComputerMark /><span className="vincent-wordmark">Dada Vincent</span></a>
           <span>Made with care, and a lot of open tabs.</span>
-          <div className="vincent-footer-links"><a href="#resources">Resources</a><a href="mailto:dadaademolav@gmail.com">Contact</a><a href="#top">Back to top ↑</a></div>
+          <div className="vincent-footer-links"><a href="/resources">Resources</a><a href="mailto:dadaademolav@gmail.com">Contact</a><a href={sectionHref('top')}>Back to top ↑</a></div>
         </footer>
       </div>
     </div>
