@@ -52,6 +52,26 @@ function App() {
   const [activeCategory, setActiveCategory] = useState('Everything');
   const [searchTerm, setSearchTerm] = useState('');
   const [menuOpen, setMenuOpen] = useState(false);
+  const [headerVisible, setHeaderVisible] = useState(true);
+
+  useEffect(() => {
+    let previousScrollY = window.scrollY;
+    const updateHeaderVisibility = () => {
+      const currentScrollY = window.scrollY;
+      const scrollDelta = currentScrollY - previousScrollY;
+
+      if (currentScrollY <= 80 || menuOpen) {
+        setHeaderVisible(true);
+      } else if (Math.abs(scrollDelta) >= 5) {
+        setHeaderVisible(scrollDelta < 0);
+      }
+
+      if (Math.abs(scrollDelta) >= 5) previousScrollY = currentScrollY;
+    };
+
+    window.addEventListener('scroll', updateHeaderVisibility, { passive: true });
+    return () => window.removeEventListener('scroll', updateHeaderVisibility);
+  }, [menuOpen]);
 
   useEffect(() => {
     if (!menuOpen) return;
@@ -76,7 +96,7 @@ function App() {
   return (
     <div className="vincent-page">
       <div className="vincent-frame">
-        <header className="vincent-header">
+        <header className={`vincent-header${headerVisible ? '' : ' is-hidden'}`}>
           <a className="vincent-brand" href="#top" aria-label="Vincent Dada home" onClick={closeMenu} data-testid="link-home">
             <ComputerMark /><span className="vincent-wordmark">Dada Vincent</span>
           </a>
@@ -85,7 +105,7 @@ function App() {
           </button>
           <nav id="main-navigation" className={`vincent-nav${menuOpen ? ' open' : ''}`} aria-label="Main navigation">
             <a onClick={closeMenu} href="#about">About</a>
-            <a onClick={closeMenu} href="#Cohort">Cohort</a>
+            <a onClick={closeMenu} href="#cohort">Cohort</a>
             <a onClick={closeMenu} href="#resources">Resources</a>
             <a onClick={closeMenu} href="#work">Work with me</a>
             <a className="vincent-nav-cta" onClick={closeMenu} href={SUBSTACK} target="_blank" rel="noopener noreferrer">Get the newsletter</a>
@@ -121,7 +141,7 @@ function App() {
             </div>
           </section>
 
-          <section className="vincent-section vincent-ethos" id="ethos">
+          <section className="vincent-section vincent-ethos" id="cohort">
             <div className="vincent-ethos-inner">
               <div><p className="vincent-section-label">The Cohort</p><h2>There’s room for the way you do it.</h2></div>
               <div className="vincent-ethos-copy">

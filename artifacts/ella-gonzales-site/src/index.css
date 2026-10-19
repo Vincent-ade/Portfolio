@@ -86,10 +86,11 @@
   :focus-visible { outline: 3px solid #8993ee; outline-offset: 3px; }
 }
 
-.vincent-page { min-height: 100dvh; background: #fff; color: var(--ink); font-family: var(--app-font-sans); overflow: hidden; }
+.vincent-page { min-height: 100dvh; background: #fff; color: var(--ink); font-family: var(--app-font-sans); overflow: clip; }
 .vincent-page *, .vincent-page *::before, .vincent-page *::after { box-sizing: border-box; }
 .vincent-frame { max-width: 1440px; margin: 0 auto; border-inline: 1px solid #f0efed; }
-.vincent-header { border-bottom: 1px solid var(--line); padding: 0 7.1%; height: 88px; display: flex; align-items: center; justify-content: space-between; gap: 28px; position: relative; z-index: 10; background: rgba(255,255,255,.96); }
+.vincent-header { border-bottom: 1px solid var(--line); padding: 0 7.1%; height: 88px; display: flex; align-items: center; justify-content: space-between; gap: 28px; position: sticky; top: 0; z-index: 10; background: rgba(255,255,255,.96); }
+.vincent-header.is-hidden { transform: translateY(-100%); }
 .vincent-brand { display: inline-flex; align-items: center; gap: 10px; color: var(--ink); text-decoration: none; flex-shrink: 0; }
 .vincent-computer { width: 41px; height: 37px; fill: none; stroke: var(--blue); stroke-width: 1.7; stroke-linecap: round; stroke-linejoin: round; }
 .vincent-wordmark { font: 600 20px/1 var(--app-font-serif); letter-spacing: -.65px; }
@@ -180,6 +181,7 @@
 .vincent-page a, .vincent-page button { touch-action: manipulation; }
 .vincent-resource-link:focus-visible { outline-offset: 6px; }
 @media (prefers-reduced-motion: no-preference) {
+  .vincent-header { transition: transform .2s ease; }
   .vincent-hero > * { animation: arrive .65s both; }
   .vincent-hero > *:nth-child(2) { animation-delay: .05s; }
   .vincent-hero > *:nth-child(3) { animation-delay: .1s; }
