@@ -1,7 +1,7 @@
 kind = "web"
 previewPath = "/"
-title = "Ella Gonzales"
-description = "A personal website for Ella Gonzales, sharing her technology journey, creator work, career resources, and ways to collaborate. Includes working navigation, resource filters, and links to the original newsletter and resource destinations."
+title = "Vincent Gonzales"
+description = "A personal website for Vincent Gonzales, sharing her technology journey, creator work, career resources, and ways to collaborate. Includes working navigation, resource filters, and links to the original newsletter and resource destinations."
 version = "1.0.0"
 id = "artifacts/ella-gonzales-site"
 router = "path"
@@ -12,10 +12,10 @@ paths = [ "/" ]
 localPort = 19591
 
 [services.development]
-run = "pnpm --filter @workspace/ella-gonzales-site run dev"
+run = "pnpm --filter @workspace/vincent-gonzales-site run dev"
 
 [services.production]
-build = [ "pnpm", "--filter", "@workspace/ella-gonzales-site", "run", "build" ]
+build = [ "pnpm", "--filter", "@workspace/vincent-gonzales-site", "run", "build" ]
 serve = "static"
 publicDir = "artifacts/ella-gonzales-site/dist/public"
 
