@@ -113,11 +113,29 @@
 .vincent-button { display: inline-flex; align-items: center; justify-content: center; gap: 10px; min-height: 48px; border-radius: 999px; border: 1px solid transparent; padding: 0 23px; background: var(--blue); color: white; font: 600 13px var(--app-font-sans); text-decoration: none; cursor: pointer; transition: transform .2s ease, background .2s ease, box-shadow .2s ease; }
 .vincent-button:hover { background: var(--blue-deep); transform: translateY(-2px); box-shadow: 0 9px 22px #596bd225; }
 .vincent-button svg { width: 15px; height: 15px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
-.vincent-portrait-wrap { max-width: 535px; margin: 59px auto 0; padding: 0 32px; position: relative; isolation: isolate; }
-.vincent-portrait-wrap::before { content: ""; position: absolute; z-index: 0; inset: 8px 16px 0 32px; background: #eceeff; border-radius: 7% 9% 6% 7%; transform: translate(13px, 7px) rotate(1.2deg); pointer-events: none; }
-.vincent-portrait { position: relative; z-index: 1; display: block; width: 100%; height: auto; aspect-ratio: 4 / 5; object-fit: cover; object-position: center 43%; border-radius: 7% 9% 6% 7%; transform: rotate(-1.5deg); }
+.vincent-portrait-wrap { display: block; width: 100%; max-width: 535px; margin: 59px auto 0; padding: 0 32px; position: relative; isolation: isolate; border: 0; background: transparent; color: inherit; font: inherit; text-align: inherit; cursor: pointer; }
+.vincent-portrait-wrap::before { content: ""; position: absolute; z-index: 0; inset: 8px 16px 0 32px; background: #eceeff; border-radius: 7% 9% 6% 7%; transform: translate(13px, 7px) rotate(1.2deg); transition: transform .45s cubic-bezier(.2,.7,.2,1); pointer-events: none; }
+.vincent-portrait-stack { display: block; position: relative; z-index: 1; width: 100%; aspect-ratio: 4 / 5; }
+.vincent-portrait { position: absolute; inset: 0; display: block; width: 100%; height: 100%; object-fit: cover; object-position: center 43%; border-radius: 7% 9% 6% 7%; transition: opacity .38s ease, transform .55s cubic-bezier(.2,.7,.2,1), filter .4s ease; }
+.vincent-portrait-primary { transform: rotate(-1.5deg); }
+.vincent-portrait-alternate { opacity: 0; transform: translate(16px, 12px) rotate(4deg) scale(.97); }
+.vincent-portrait-wrap.is-alt .vincent-portrait-primary { opacity: 0; transform: translate(-12px, -8px) rotate(-4deg) scale(.97); }
+.vincent-portrait-wrap.is-alt .vincent-portrait-alternate { opacity: 1; transform: translate(0) rotate(-1deg) scale(1); }
+.vincent-portrait-wrap:focus-visible { outline: 3px solid #8993ee; outline-offset: 6px; }
+.vincent-portrait-wrap:focus-visible .vincent-portrait-alternate { opacity: 1; transform: translate(0) rotate(-1deg) scale(1); }
+.vincent-portrait-wrap:focus-visible .vincent-portrait-primary { opacity: 0; transform: translate(-12px, -8px) rotate(-4deg) scale(.97); }
 .vincent-photo-caption { position: absolute; z-index: 2; right: 39px; bottom: 20px; background: rgba(255,255,255,.92); padding: 10px 15px; border-radius: 999px; font-size: 11px; color: #505058; }
 .vincent-photo-caption span { color: var(--blue-deep); margin-right: 5px; }
+@media (hover: hover) and (pointer: fine) {
+  .vincent-portrait-wrap:hover { transform: translateY(-7px) rotate(.5deg); }
+  .vincent-portrait-wrap:hover::before { transform: translate(18px, 12px) rotate(2deg); }
+  .vincent-portrait-wrap:hover .vincent-portrait-primary { opacity: 0; transform: translate(-12px, -8px) rotate(-4deg) scale(.97); }
+  .vincent-portrait-wrap:hover .vincent-portrait-alternate { opacity: 1; transform: translate(0) rotate(-1deg) scale(1); }
+  .vincent-portrait-wrap { transition: transform .45s cubic-bezier(.2,.7,.2,1); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .vincent-portrait-wrap, .vincent-portrait-wrap::before, .vincent-portrait { transition-duration: .01ms; }
+}
 .vincent-section { padding: 112px 9%; }
 .vincent-about { display: grid; grid-template-columns: .75fr 1.25fr; gap: 12%; align-items: start; }
 .vincent-section-label { text-transform: uppercase; letter-spacing: 1.8px; font-weight: 700; color: var(--blue-deep); font-size: 11px; margin: 7px 0 14px; }

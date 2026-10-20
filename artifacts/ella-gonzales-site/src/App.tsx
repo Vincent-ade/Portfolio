@@ -97,6 +97,7 @@ function App() {
   const [location] = useLocation();
   const [menuOpen, setMenuOpen] = useState(false);
   const [headerVisible, setHeaderVisible] = useState(true);
+  const [portraitAlt, setPortraitAlt] = useState(false);
   const isResourcesPage = location === '/resources';
 
   useEffect(() => {
@@ -163,10 +164,13 @@ function App() {
             <h1 id="hero-heading">Hi, I’m Vincent. <span>Glad you’re here.</span></h1>
             <p className="vincent-hero-copy">I’m a creator, curious technologist, and work-in-progress. I share the resources and experiments that helped me find my way into tech — in case they help you find yours, too.</p>
             <a className="vincent-button" href="#about">A little about me <ArrowRight aria-hidden="true" /></a>
-            <div className="vincent-portrait-wrap">
-              <img className="vincent-portrait" src="/images/vincent-homepage-portrait.jpg" alt="Vincent enjoying a sunny afternoon in a leafy garden" fetchPriority="high" data-testid="img-vincent-portrait" />
+            <button className={`vincent-portrait-wrap${portraitAlt ? ' is-alt' : ''}`} type="button" aria-label="Switch portrait photo" aria-pressed={portraitAlt} onClick={() => setPortraitAlt((showAlternate) => !showAlternate)}>
+              <span className="vincent-portrait-stack">
+                <img className="vincent-portrait vincent-portrait-primary" src="/images/vincent-homepage-portrait.jpg" alt="Vincent enjoying a sunny afternoon in a leafy garden" fetchPriority="high" data-testid="img-vincent-portrait" />
+                <img className="vincent-portrait vincent-portrait-alternate" src="/images/vincent-homepage-portrait..jpg" alt="" aria-hidden="true" />
+              </span>
               <div className="vincent-photo-caption"><span aria-hidden="true">•</span> learning out loud, always</div>
-            </div>
+            </button>
           </section>
 
           <section className="vincent-section vincent-about" id="about">
