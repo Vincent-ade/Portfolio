@@ -101,6 +101,17 @@ function App() {
   const isResourcesPage = location === '/resources';
 
   useEffect(() => {
+    if (location !== '/' || !window.location.hash) return;
+
+    const sectionId = decodeURIComponent(window.location.hash.slice(1));
+    const frameId = window.requestAnimationFrame(() => {
+      document.getElementById(sectionId)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
+
+    return () => window.cancelAnimationFrame(frameId);
+  }, [location]);
+
+  useEffect(() => {
     let previousScrollY = window.scrollY;
     const updateHeaderVisibility = () => {
       const currentScrollY = window.scrollY;
