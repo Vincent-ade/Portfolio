@@ -1,5 +1,5 @@
-import { useEffect, useMemo, useState } from 'react';
-import { ArrowRight, ExternalLink, Menu, Search, X } from 'lucide-react';
+import { useEffect, useMemo, useRef, useState } from 'react';
+import { ArrowRight, ExternalLink, Menu, Move, RotateCcw, Search, X } from 'lucide-react';
 import { useLocation } from 'wouter';
 
 type Resource = {
@@ -90,6 +90,109 @@ function ResourceLibrary() {
         <a className="vincent-button" href="https://cs-roadmap-waitlist.vincentalanagonzales.chatgpt.site/" target="_blank" rel="noopener noreferrer">Join the early list <ArrowRight aria-hidden="true" /></a>
       </div>
     </section>
+  );
+}
+
+type VideoPosition = { x: number; y: number };
+type VideoDrag = { pointerId: number; startX: number; startY: number; position: VideoPosition };
+
+function clampVideoPosition(x: number, y: number, stage: HTMLDivElement | null, card: HTMLDivElement | null): VideoPosition {
+  if (!stage || !card) return { x: 0, y: 0 };
+
+  const maxX = Math.max(0, (stage.clientWidth - card.offsetWidth) / 2);
+  const maxY = Math.max(0, (stage.clientHeight - card.offsetHeight) / 2);
+  return {
+    x: Math.max(-maxX, Math.min(maxX, x)),
+    y: Math.max(-maxY, Math.min(maxY, y)),
+  };
+}
+
+function CohortVideoStage() {
+  const [position, setPosition] = useState<VideoPosition>({ x: 0, y: 0 });
+  const [dragging, setDragging] = useState(false);
+  const stageRef = useRef<HTMLDivElement>(null);
+  const cardRef = useRef<HTMLDivElement>(null);
+  const dragRef = useRef<VideoDrag | null>(null);
+
+  useEffect(() => {
+    const stage = stageRef.current;
+    if (!stage || typeof ResizeObserver === 'undefined') return;
+
+    const observer = new ResizeObserver(() => {
+      setPosition((current) => clampVideoPosition(current.x, current.y, stage, cardRef.current));
+    });
+    observer.observe(stage);
+    return () => observer.disconnect();
+  }, []);
+
+  const handlePointerDown = (event: React.PointerEvent<HTMLButtonElement>) => {
+    if (event.button !== 0) return;
+
+    event.preventDefault();
+    dragRef.current = { pointerId: event.pointerId, startX: event.clientX, startY: event.clientY, position };
+    event.currentTarget.setPointerCapture(event.pointerId);
+    setDragging(true);
+  };
+
+  const handlePointerMove = (event: React.PointerEvent<HTMLButtonElement>) => {
+    const drag = dragRef.current;
+    if (!drag || drag.pointerId !== event.pointerId) return;
+
+    setPosition(clampVideoPosition(
+      drag.position.x + event.clientX - drag.startX,
+      drag.position.y + event.clientY - drag.startY,
+      stageRef.current,
+      cardRef.current,
+    ));
+  };
+
+  const handlePointerEnd = (event: React.PointerEvent<HTMLButtonElement>) => {
+    if (dragRef.current?.pointerId !== event.pointerId) return;
+    dragRef.current = null;
+    setDragging(false);
+  };
+
+  const handleMoveKeyDown = (event: React.KeyboardEvent<HTMLButtonElement>) => {
+    const step = event.shiftKey ? 32 : 12;
+    let deltaX = 0;
+    let deltaY = 0;
+
+    if (event.key === 'ArrowLeft') deltaX = -step;
+    else if (event.key === 'ArrowRight') deltaX = step;
+    else if (event.key === 'ArrowUp') deltaY = -step;
+    else if (event.key === 'ArrowDown') deltaY = step;
+    else return;
+
+    event.preventDefault();
+    setPosition((current) => clampVideoPosition(
+      current.x + deltaX,
+      current.y + deltaY,
+      stageRef.current,
+      cardRef.current,
+    ));
+  };
+
+  return (
+    <div className="vincent-cohort-video-stage" ref={stageRef}>
+      <div
+        className={`vincent-video-card${dragging ? ' is-dragging' : ''}`}
+        ref={cardRef}
+        style={{ left: `calc(50% + ${position.x}px)`, top: `calc(50% + ${position.y}px)` }}
+      >
+        <div className="vincent-video-toolbar">
+          <button className="vincent-video-tool" type="button" aria-label="Move Cohort video" title="Drag or use arrow keys to move" onPointerDown={handlePointerDown} onPointerMove={handlePointerMove} onPointerUp={handlePointerEnd} onPointerCancel={handlePointerEnd} onKeyDown={handleMoveKeyDown}>
+            <Move aria-hidden="true" size={17} />
+          </button>
+          <button className="vincent-video-tool" type="button" aria-label="Reset video position" title="Reset video position" onClick={() => setPosition({ x: 0, y: 0 })}>
+            <RotateCcw aria-hidden="true" size={16} />
+          </button>
+        </div>
+        <video controls controlsList="nodownload noremoteplayback" disablePictureInPicture playsInline preload="metadata" aria-label="Cohort motion design video" onContextMenu={(event) => event.preventDefault()}>
+          <source src="/videos/cohortdesign.mp4" type="video/mp4" />
+          Your browser does not support embedded videos.
+        </video>
+      </div>
+    </div>
   );
 }
 
@@ -194,6 +297,7 @@ function App() {
           </section>
 
           <section className="vincent-section vincent-ethos" id="cohort">
+            <CohortVideoStage />
             <div className="vincent-ethos-inner">
               <div><p className="vincent-section-label">The Cohort</p><h2>There’s room for the way you do it.</h2></div>
               <div className="vincent-ethos-copy">
