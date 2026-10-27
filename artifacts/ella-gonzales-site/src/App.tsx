@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
-import { ArrowRight, ExternalLink, Menu, Move, RotateCcw, Search, X } from 'lucide-react';
+import { ArrowRight, ExternalLink, Github, Menu, Move, RotateCcw, Search, X } from 'lucide-react';
 import { useLocation } from 'wouter';
 
 type Resource = {
@@ -44,7 +44,7 @@ function SocialIcon({ kind }: { kind: 'instagram' | 'linkedin' | 'youtube' | 'ma
   if (kind === 'instagram') return <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="3.5" width="17" height="17" rx="5" /><circle cx="12" cy="12" r="4" /><circle cx="17.6" cy="6.7" r=".8" className="vincent-icon-fill" /></svg>;
   if (kind === 'linkedin') return <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 9v10M5 5.5v.1M10 19v-6c0-2.5 4.5-3.1 4.5.1V19M10 9v10M19 19v-6.2c0-5-6.2-5.2-8-2.6" /></svg>;
   if (kind === 'youtube') return <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21 7.2a2.5 2.5 0 0 0-1.8-1.8C17.6 5 12 5 12 5s-5.6 0-7.2.4A2.5 2.5 0 0 0 3 7.2 25 25 0 0 0 2.6 12a25 25 0 0 0 .4 4.8 2.5 2.5 0 0 0 1.8 1.8C6.4 19 12 19 12 19s5.6 0 7.2-.4a2.5 2.5 0 0 0 1.8-1.8 25 25 0 0 0 .4-4.8 25 25 0 0 0-.4-4.8Z" /><path d="m10 9 5 3-5 3z" /></svg>;
-  if (kind === 'x') return <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m5 4 14 16M19 4 5 20" /></svg>;
+  if (kind === 'x') return <Github aria-hidden="true" />;
   return <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2" /><path d="m4 7 8 6 8-6" /></svg>;
 }
 
@@ -271,7 +271,7 @@ function App() {
               <a className="vincent-social-link" href="https://www.instagram.com/dadavincent_/" target="_blank" rel="noopener noreferrer" aria-label="Instagram (opens in a new tab)" data-testid="link-instagram"><SocialIcon kind="instagram" /></a>
               <a className="vincent-social-link" href="https://www.linkedin.com/in/vincent-dada-b9957a338/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn (opens in a new tab)" data-testid="link-linkedin"><SocialIcon kind="linkedin" /></a>
               <a className="vincent-social-link" href="https://www.youtube.com/@dada_vincent" target="_blank" rel="noopener noreferrer" aria-label="YouTube (opens in a new tab)" data-testid="link-youtube"><SocialIcon kind="youtube" /></a>
-              <a className="vincent-social-link" href="https://x.com/itsvincentgonzales" target="_blank" rel="noopener noreferrer" aria-label="X (opens in a new tab)" data-testid="link-x"><SocialIcon kind="x" /></a>
+              <a className="vincent-social-link" href="https://github.com/Vincent-ade" target="_blank" rel="noopener noreferrer" aria-label="X (opens in a new tab)" data-testid="link-x"><SocialIcon kind="x" /></a>
               <a className="vincent-social-link" href="mailto:dadaademolav@gmail.com" aria-label="Email Vincent" data-testid="link-email-social"><SocialIcon kind="mail" /></a>
             </div>
             <p className="vincent-kicker">A little corner of the internet</p>
@@ -325,7 +325,7 @@ function App() {
               <p>I love working with people and teams who want to make tech feel more welcoming. Bring me a thoughtful collaboration, a useful resource to make together, or a story worth sharing.</p>
               <a className="vincent-button" href="mailto:dadaademolav@gmail.com">Say hello <ArrowRight aria-hidden="true" /></a>
               <div className="vincent-work-card"><strong>Good things start with a note.</strong>Partnerships · workshops · speaking · friendly hellos</div>
-              <p style={{ marginTop: 22, fontSize: 13 }}>For Cohort partnerships, reach <a href="/">David at Cohort Growth Labs</a>.</p>
+              <p style={{ marginTop: 22, fontSize: 13 }}>For Cohort partnerships, feel free to send me a mail.</p>
             </div>
           </section>
           </>}
