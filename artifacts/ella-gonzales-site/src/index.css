@@ -171,9 +171,11 @@
 .vincent-ethos-action { margin-top: 24px; }
 .vincent-projects { background: #f5f6f2; }
 .vincent-projects-heading, .vincent-project-carousel { max-width: 1000px; margin-inline: auto; }
-.vincent-projects-heading { display: grid; grid-template-columns: .95fr 1.05fr; gap: 11%; align-items: start; margin-bottom: 36px; }
-.vincent-projects-heading h2 { max-width: 530px; }
-.vincent-projects-heading > div > p { max-width: 480px; margin: 14px 0 0; color: var(--muted-ink); font-size: 14px; line-height: 1.8; }
+.vincent-projects-heading { display: flex; flex-direction: column; align-items: center; gap: 0; margin-bottom: 36px; text-align: center; }
+.vincent-projects-heading h2 { max-width: 700px; margin-inline: auto; }
+.vincent-projects-heading > div > p { max-width: 480px; margin: 14px auto 0; color: var(--muted-ink); font-size: 14px; line-height: 1.8; }
+.vincent-typewriter-text:not(.is-done)::after { content: ""; display: inline-block; width: 2px; height: .85em; margin-left: .08em; background: currentColor; vertical-align: -.04em; animation: typewriter-caret .75s steps(2, start) infinite; }
+@keyframes typewriter-caret { to { visibility: hidden; } }
 .vincent-project-carousel { display: grid; grid-template-columns: minmax(0, 460px) minmax(220px, 1fr); align-items: center; gap: 7%; padding-top: 25px; border-top: 1px solid #dedfd9; }
 .vincent-project-visual { min-width: 0; touch-action: pan-y; }
 .vincent-project-media { width: min(460px, 100%); overflow: hidden; aspect-ratio: 1.9; border-radius: 6px; background: #e7e8e4; }
@@ -277,8 +279,8 @@
   .vincent-section { padding: 78px 8%; }
   .vincent-about, .vincent-ethos-inner, .vincent-work { grid-template-columns: 1fr; gap: 22px; }
   .vincent-ethos-inner { gap: 18px; }
-  .vincent-projects-heading, .vincent-project-carousel { grid-template-columns: 1fr; gap: 22px; }
-  .vincent-projects-heading { margin-bottom: 28px; }
+  .vincent-projects-heading { gap: 8px; margin-bottom: 28px; }
+  .vincent-project-carousel { grid-template-columns: 1fr; gap: 20px; }
   .vincent-project-carousel { gap: 20px; }
   .vincent-project-copy h3 { font-size: 24px; }
   .vincent-resources { padding-top: 82px; }

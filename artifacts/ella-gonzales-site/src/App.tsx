@@ -199,7 +199,7 @@ function CohortVideoStage() {
 const projects = [
   {
     title: 'D&N Catering & Events',
-    category: 'WEB DESIGN',
+    category: 'CATERING WEBSITE',
     description: 'A warm, polished homepage concept for a family-owned catering and events business.',
     image: '/images/image-1793276593101.png',
     link: 'https://d-n-catering-service.vercel.app/',
@@ -214,6 +214,58 @@ const projects = [
     imageAlt: 'NORTH fashion storefront homepage featuring its spring collection',
   },
 ];
+
+const PROJECTS_HEADING = 'A little work, made real.';
+
+function TypewriterHeading() {
+  const [typedText, setTypedText] = useState('');
+  const [typingComplete, setTypingComplete] = useState(false);
+  const headingRef = useRef<HTMLSpanElement>(null);
+
+  useEffect(() => {
+    const heading = headingRef.current;
+    if (!heading) return;
+
+    const showFullHeading = () => {
+      setTypedText(PROJECTS_HEADING);
+      setTypingComplete(true);
+    };
+
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches || !('IntersectionObserver' in window)) {
+      showFullHeading();
+      return;
+    }
+
+    let intervalId: number | undefined;
+    const observer = new IntersectionObserver(([entry]) => {
+      if (!entry?.isIntersecting) return;
+      observer.disconnect();
+
+      let characterCount = 0;
+      intervalId = window.setInterval(() => {
+        characterCount += 1;
+        setTypedText(PROJECTS_HEADING.slice(0, characterCount));
+        if (characterCount >= PROJECTS_HEADING.length) {
+          window.clearInterval(intervalId);
+          setTypingComplete(true);
+        }
+      }, 55);
+    }, { threshold: 0.6 });
+
+    observer.observe(heading);
+    return () => {
+      observer.disconnect();
+      if (intervalId !== undefined) window.clearInterval(intervalId);
+    };
+  }, []);
+
+  return (
+    <h2 id="projects-heading">
+      <span ref={headingRef} className={`vincent-typewriter-text${typingComplete ? ' is-done' : ''}`} aria-hidden="true">{typedText}</span>
+      <span className="sr-only">{PROJECTS_HEADING}</span>
+    </h2>
+  );
+}
 
 function ProjectCarousel() {
   const [activeProject, setActiveProject] = useState(0);
@@ -398,7 +450,7 @@ function App() {
           <section className="vincent-section vincent-projects vincent-scroll-reveal" id="projects" aria-labelledby="projects-heading">
             <div className="vincent-projects-heading">
               <p className="vincent-section-label">Selected projects</p>
-              <div><h2 id="projects-heading">A little work, made real.</h2><p>Ideas become more real when you make something with them.</p></div>
+              <div><TypewriterHeading /><p>Ideas become more real when you make something with them.</p></div>
             </div>
             <ProjectCarousel />
           </section>
