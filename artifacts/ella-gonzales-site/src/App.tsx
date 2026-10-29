@@ -202,6 +202,7 @@ const projects = [
     category: 'WEB DESIGN',
     description: 'A warm, polished homepage concept for a family-owned catering and events business.',
     image: '/images/image-1793276593101.png',
+    link: 'https://d-n-catering-service.vercel.app/',
     imageAlt: 'D&N Catering and Events homepage featuring a plated meal and catering services',
   },
   {
@@ -209,6 +210,7 @@ const projects = [
     category: 'E-COMMERCE DESIGN',
     description: 'A clean storefront concept for a timeless essentials collection.',
     image: '/images/image-1793276703348.png',
+    link: 'http://north-ecommerce-web.vercel.app/',
     imageAlt: 'NORTH fashion storefront homepage featuring its spring collection',
   },
 ];
@@ -237,7 +239,7 @@ function ProjectCarousel() {
     <div className="vincent-project-carousel" role="region" aria-label="Selected projects" aria-roledescription="carousel">
       <div className="vincent-project-visual" onTouchStart={(event) => { touchStartX.current = event.touches[0]?.clientX ?? null; }} onTouchEnd={handleTouchEnd} onTouchCancel={() => { touchStartX.current = null; }}>
         <div className="vincent-project-media" role="group" aria-roledescription="slide" aria-label={`${activeProject + 1} of ${projects.length}`}>
-          <img key={project.image} src={project.image} alt={project.imageAlt} draggable="false" />
+          {project.link ? <a className="vincent-project-image-link" href={project.link} target="_blank" rel="noopener noreferrer" aria-label={`View ${project.title} project (opens in a new tab)`}><img key={project.image} src={project.image} alt={project.imageAlt} draggable="false" /></a> : <img key={project.image} src={project.image} alt={project.imageAlt} draggable="false" />}
         </div>
         <div className="vincent-project-controls">
           <span aria-live="polite">{String(activeProject + 1).padStart(2, '0')} <span aria-hidden="true">/</span> {String(projects.length).padStart(2, '0')}</span>
@@ -251,6 +253,7 @@ function ProjectCarousel() {
         <span className="vincent-project-number">{project.category}</span>
         <h3 key={`${project.title}-heading`}>{project.title}</h3>
         <p key={`${project.title}-description`}>{project.description}</p>
+        {project.link && <a className="vincent-project-visit" href={project.link} target="_blank" rel="noopener noreferrer">View project <ArrowRight aria-hidden="true" size={15} /></a>}
       </div>
     </div>
   );
@@ -379,11 +382,11 @@ function App() {
             </div>
           </section>
 
-          <section className="vincent-section vincent-ethos vincent-scroll-reveal" id="cohort">
+          <section className="vincent-section vincent-ethos" id="cohort">
             <CohortVideoStage />
             <div className="vincent-ethos-inner">
-              <div><p className="vincent-section-label">The Cohort</p><h2>There’s room for the way you do it.</h2></div>
-              <div className="vincent-ethos-copy">
+              <div className="vincent-scroll-reveal vincent-scroll-from-left"><p className="vincent-section-label">The Cohort</p><h2>There’s room for the way you do it.</h2></div>
+              <div className="vincent-ethos-copy vincent-scroll-reveal vincent-scroll-from-right">
                 <p>This space is for programmers who want to build real things: beginners with big ideas, self-taught developers, students, and anyone ready to move from tutorials to shipped projects. All skill levels are welcome, but effort is required.</p>
                 <p>Here, we work in teams, use Git and GitHub, review each other’s code, and give honest feedback with respect. We expect consistency: members who go quiet for two weeks without notice make room for others. Apply, show up, and build something that matters.</p>
                 <div className="vincent-values"><span className="vincent-value">Curiosity over credentials</span><span className="vincent-value">Progress over polish</span><span className="vincent-value">Community over competition</span></div>

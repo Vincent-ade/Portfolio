@@ -177,6 +177,7 @@
 .vincent-project-carousel { display: grid; grid-template-columns: minmax(0, 460px) minmax(220px, 1fr); align-items: center; gap: 7%; padding-top: 25px; border-top: 1px solid #dedfd9; }
 .vincent-project-visual { min-width: 0; touch-action: pan-y; }
 .vincent-project-media { width: min(460px, 100%); overflow: hidden; aspect-ratio: 1.9; border-radius: 6px; background: #e7e8e4; }
+.vincent-project-image-link { display: block; width: 100%; height: 100%; }
 .vincent-project-media img { display: block; width: 100%; height: 100%; object-fit: contain; user-select: none; }
 .vincent-project-controls { display: flex; align-items: center; justify-content: space-between; margin-top: 13px; color: var(--muted-ink); font-size: 11px; font-variant-numeric: tabular-nums; }
 .vincent-project-controls > div { display: flex; gap: 8px; }
@@ -186,6 +187,8 @@
 .vincent-project-number { color: var(--blue-deep); font-size: 10px; font-weight: 700; }
 .vincent-project-copy h3 { margin: 12px 0 8px; font: 500 28px/1.2 var(--app-font-serif); }
 .vincent-project-copy p { margin: 0; color: var(--muted-ink); font-size: 14px; line-height: 1.8; }
+.vincent-project-visit { display: inline-flex; align-items: center; gap: 8px; margin-top: 18px; color: var(--blue-deep); font-size: 13px; font-weight: 600; text-decoration: none; }
+.vincent-project-visit:hover { text-decoration: underline; text-underline-offset: 4px; }
 @media (hover: hover) and (pointer: fine) {
   .vincent-project-media:hover img { transform: scale(1.01); }
 }
@@ -241,6 +244,9 @@
 .vincent-resource-link:focus-visible { outline-offset: 6px; }
 .vincent-scroll-reveal { opacity: 1; transform: translateY(0); transition: opacity .65s ease, transform .65s cubic-bezier(.2,.7,.2,1); }
 .vincent-page.has-scroll-reveal .vincent-scroll-reveal:not(.is-visible) { opacity: 0; transform: translateY(22px); }
+.vincent-page.has-scroll-reveal .vincent-scroll-from-left:not(.is-visible) { transform: translateX(-36px); }
+.vincent-scroll-from-right { transition-delay: .12s; }
+.vincent-page.has-scroll-reveal .vincent-scroll-from-right:not(.is-visible) { transform: translateX(36px); }
 @media (prefers-reduced-motion: reduce) {
   .vincent-scroll-reveal { opacity: 1 !important; transform: none !important; transition: none !important; }
 }
