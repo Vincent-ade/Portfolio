@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
-import { ArrowRight, ExternalLink, Github, Menu, Move, RotateCcw, Search, X } from 'lucide-react';
+import { ArrowRight, ChevronLeft, ChevronRight, ExternalLink, Github, Menu, Move, RotateCcw, Search, X } from 'lucide-react';
 import { useLocation } from 'wouter';
 
 type Resource = {
@@ -196,6 +196,66 @@ function CohortVideoStage() {
   );
 }
 
+const projects = [
+  {
+    title: 'D&N Catering & Events',
+    category: 'WEB DESIGN',
+    description: 'A warm, polished homepage concept for a family-owned catering and events business.',
+    image: '/images/image-1793276593101.png',
+    imageAlt: 'D&N Catering and Events homepage featuring a plated meal and catering services',
+  },
+  {
+    title: 'NORTH. Fashion Storefront',
+    category: 'E-COMMERCE DESIGN',
+    description: 'A clean storefront concept for a timeless essentials collection.',
+    image: '/images/image-1793276703348.png',
+    imageAlt: 'NORTH fashion storefront homepage featuring its spring collection',
+  },
+];
+
+function ProjectCarousel() {
+  const [activeProject, setActiveProject] = useState(0);
+  const touchStartX = useRef<number | null>(null);
+  const project = projects[activeProject];
+
+  const showProject = (direction: -1 | 1) => {
+    setActiveProject((current) => (current + direction + projects.length) % projects.length);
+  };
+
+  const handleTouchEnd = (event: React.TouchEvent<HTMLDivElement>) => {
+    const startX = touchStartX.current;
+    const endX = event.changedTouches[0]?.clientX;
+    touchStartX.current = null;
+    if (startX === null || endX === undefined) return;
+
+    const distance = endX - startX;
+    if (Math.abs(distance) < 45) return;
+    showProject(distance < 0 ? 1 : -1);
+  };
+
+  return (
+    <div className="vincent-project-carousel" role="region" aria-label="Selected projects" aria-roledescription="carousel">
+      <div className="vincent-project-visual" onTouchStart={(event) => { touchStartX.current = event.touches[0]?.clientX ?? null; }} onTouchEnd={handleTouchEnd} onTouchCancel={() => { touchStartX.current = null; }}>
+        <div className="vincent-project-media" role="group" aria-roledescription="slide" aria-label={`${activeProject + 1} of ${projects.length}`}>
+          <img key={project.image} src={project.image} alt={project.imageAlt} draggable="false" />
+        </div>
+        <div className="vincent-project-controls">
+          <span aria-live="polite">{String(activeProject + 1).padStart(2, '0')} <span aria-hidden="true">/</span> {String(projects.length).padStart(2, '0')}</span>
+          <div>
+            <button type="button" className="vincent-project-arrow" aria-label="Previous project" onClick={() => showProject(-1)}><ChevronLeft aria-hidden="true" /></button>
+            <button type="button" className="vincent-project-arrow" aria-label="Next project" onClick={() => showProject(1)}><ChevronRight aria-hidden="true" /></button>
+          </div>
+        </div>
+      </div>
+      <div className="vincent-project-copy" aria-live="polite">
+        <span className="vincent-project-number">{project.category}</span>
+        <h3 key={`${project.title}-heading`}>{project.title}</h3>
+        <p key={`${project.title}-description`}>{project.description}</p>
+      </div>
+    </div>
+  );
+}
+
 function App() {
   const [location] = useLocation();
   const [menuOpen, setMenuOpen] = useState(false);
@@ -307,6 +367,14 @@ function App() {
                 <a className="vincent-button vincent-ethos-action" href="https://forms.gle/fi1YQCTBT9K2rvu69" target="_blank" rel="noopener noreferrer">Apply to Cohort Creator Lab <ExternalLink aria-hidden="true" /></a>
               </div>
             </div>
+          </section>
+
+          <section className="vincent-section vincent-projects" id="projects" aria-labelledby="projects-heading">
+            <div className="vincent-projects-heading">
+              <p className="vincent-section-label">Selected projects</p>
+              <div><h2 id="projects-heading">A little work, made real.</h2><p>Ideas become more real when you make something with them.</p></div>
+            </div>
+            <ProjectCarousel />
           </section>
 
           <section className="vincent-newsletter" id="newsletter">

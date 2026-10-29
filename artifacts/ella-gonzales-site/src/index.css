@@ -169,6 +169,29 @@
 .vincent-values { display: flex; flex-wrap: wrap; gap: 9px; margin-top: 23px; }
 .vincent-value { border: 1px solid #dfded9; border-radius: 999px; padding: 9px 13px; color: #515158; font-size: 11px; }
 .vincent-ethos-action { margin-top: 24px; }
+.vincent-projects { background: #f5f6f2; }
+.vincent-projects-heading, .vincent-project-carousel { max-width: 1000px; margin-inline: auto; }
+.vincent-projects-heading { display: grid; grid-template-columns: .95fr 1.05fr; gap: 11%; align-items: start; margin-bottom: 36px; }
+.vincent-projects-heading h2 { max-width: 530px; }
+.vincent-projects-heading > div > p { max-width: 480px; margin: 14px 0 0; color: var(--muted-ink); font-size: 14px; line-height: 1.8; }
+.vincent-project-carousel { display: grid; grid-template-columns: minmax(0, 460px) minmax(220px, 1fr); align-items: center; gap: 7%; padding-top: 25px; border-top: 1px solid #dedfd9; }
+.vincent-project-visual { min-width: 0; touch-action: pan-y; }
+.vincent-project-media { width: min(460px, 100%); overflow: hidden; aspect-ratio: 1.9; border-radius: 6px; background: #e7e8e4; }
+.vincent-project-media img { display: block; width: 100%; height: 100%; object-fit: contain; user-select: none; }
+.vincent-project-controls { display: flex; align-items: center; justify-content: space-between; margin-top: 13px; color: var(--muted-ink); font-size: 11px; font-variant-numeric: tabular-nums; }
+.vincent-project-controls > div { display: flex; gap: 8px; }
+.vincent-project-arrow { display: grid; width: 42px; height: 42px; place-items: center; border: 1px solid #d8d9d4; border-radius: 50%; background: transparent; color: var(--ink); cursor: pointer; transition: color .18s ease, background .18s ease, border-color .18s ease, transform .18s ease; }
+.vincent-project-arrow:hover { transform: translateY(-2px); border-color: var(--blue-deep); background: white; color: var(--blue-deep); }
+.vincent-project-arrow svg { width: 18px; height: 18px; }
+.vincent-project-number { color: var(--blue-deep); font-size: 10px; font-weight: 700; }
+.vincent-project-copy h3 { margin: 12px 0 8px; font: 500 28px/1.2 var(--app-font-serif); }
+.vincent-project-copy p { margin: 0; color: var(--muted-ink); font-size: 14px; line-height: 1.8; }
+@media (hover: hover) and (pointer: fine) {
+  .vincent-project-media:hover img { transform: scale(1.01); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .vincent-project-arrow { transition: none; }
+}
 .vincent-resources { padding-top: 119px; }
 .vincent-resources-heading { display: flex; align-items: end; justify-content: space-between; gap: 30px; margin-bottom: 34px; }
 .vincent-resources-heading h2 { max-width: 530px; }
@@ -243,6 +266,10 @@
   .vincent-section { padding: 78px 8%; }
   .vincent-about, .vincent-ethos-inner, .vincent-work { grid-template-columns: 1fr; gap: 22px; }
   .vincent-ethos-inner { gap: 18px; }
+  .vincent-projects-heading, .vincent-project-carousel { grid-template-columns: 1fr; gap: 22px; }
+  .vincent-projects-heading { margin-bottom: 28px; }
+  .vincent-project-carousel { gap: 20px; }
+  .vincent-project-copy h3 { font-size: 24px; }
   .vincent-resources { padding-top: 82px; }
   .vincent-resources-heading { display: block; }
   .vincent-resource-intro { margin-top: 17px; }
