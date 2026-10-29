@@ -62,7 +62,7 @@ function ResourceLibrary() {
   }, [activeCategory, searchTerm]);
 
   return (
-    <section className="vincent-section vincent-resources" aria-labelledby="resources-heading">
+    <section className="vincent-section vincent-resources vincent-scroll-reveal" aria-labelledby="resources-heading">
       <div className="vincent-resources-heading">
         <div><p className="vincent-section-label">The resource library</p><h1 id="resources-heading">Useful things for your next step.</h1></div>
         <p className="vincent-resource-intro">Notes from the messy middle, made practical. Start with what you need today; you can come back for the rest.</p>
@@ -275,6 +275,29 @@ function App() {
   }, [location]);
 
   useEffect(() => {
+    const page = document.querySelector<HTMLElement>('.vincent-page');
+    const targets = page?.querySelectorAll<HTMLElement>('.vincent-scroll-reveal');
+    if (!page || !targets?.length || !('IntersectionObserver' in window) || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting) return;
+        entry.target.classList.add('is-visible');
+        observer.unobserve(entry.target);
+      });
+    }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+
+    page.classList.add('has-scroll-reveal');
+    targets.forEach((target) => observer.observe(target));
+
+    return () => {
+      observer.disconnect();
+      page.classList.remove('has-scroll-reveal');
+      targets.forEach((target) => target.classList.remove('is-visible'));
+    };
+  }, [location]);
+
+  useEffect(() => {
     let previousScrollY = window.scrollY;
     const updateHeaderVisibility = () => {
       const currentScrollY = window.scrollY;
@@ -347,7 +370,7 @@ function App() {
             </button>
           </section>
 
-          <section className="vincent-section vincent-about" id="about">
+          <section className="vincent-section vincent-about vincent-scroll-reveal" id="about">
             <div><p className="vincent-section-label">A bit about me</p><h2>Tech didn’t feel like a place for me. Then I made it one.</h2></div>
             <div className="vincent-about-copy">
               <p>I’m Vincent — a creator and builder who took the scenic route into technology. I know what it feels like to be interested in a thousand things and still wonder whether you belong in the room.</p>
@@ -356,7 +379,7 @@ function App() {
             </div>
           </section>
 
-          <section className="vincent-section vincent-ethos" id="cohort">
+          <section className="vincent-section vincent-ethos vincent-scroll-reveal" id="cohort">
             <CohortVideoStage />
             <div className="vincent-ethos-inner">
               <div><p className="vincent-section-label">The Cohort</p><h2>There’s room for the way you do it.</h2></div>
@@ -369,7 +392,7 @@ function App() {
             </div>
           </section>
 
-          <section className="vincent-section vincent-projects" id="projects" aria-labelledby="projects-heading">
+          <section className="vincent-section vincent-projects vincent-scroll-reveal" id="projects" aria-labelledby="projects-heading">
             <div className="vincent-projects-heading">
               <p className="vincent-section-label">Selected projects</p>
               <div><h2 id="projects-heading">A little work, made real.</h2><p>Ideas become more real when you make something with them.</p></div>
@@ -377,7 +400,7 @@ function App() {
             <ProjectCarousel />
           </section>
 
-          <section className="vincent-newsletter" id="newsletter">
+          <section className="vincent-newsletter vincent-scroll-reveal" id="newsletter">
             <div className="vincent-newsletter-inner">
               <div><p className="vincent-section-label">A note from me to you</p><h2>Good things take a few drafts.</h2><p className="vincent-newsletter-copy">A short, occasional letter with new resources, honest lessons, and little things I’m making. No noise; just something useful to take with you.</p></div>
               <div>
@@ -387,7 +410,7 @@ function App() {
             </div>
           </section>
 
-          <section className="vincent-section vincent-work" id="work">
+          <section className="vincent-section vincent-work vincent-scroll-reveal" id="work">
             <div><p className="vincent-section-label">Work with me</p><h2>Let’s make something that helps someone begin.</h2></div>
             <div className="vincent-work-copy">
               <p>I love working with people and teams who want to make tech feel more welcoming. Bring me a thoughtful collaboration, a useful resource to make together, or a story worth sharing.</p>

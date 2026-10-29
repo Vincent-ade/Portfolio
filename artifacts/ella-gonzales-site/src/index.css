@@ -239,6 +239,11 @@
 .vincent-footer-links { display: flex; gap: 22px; }
 .vincent-page a, .vincent-page button { touch-action: manipulation; }
 .vincent-resource-link:focus-visible { outline-offset: 6px; }
+.vincent-scroll-reveal { opacity: 1; transform: translateY(0); transition: opacity .65s ease, transform .65s cubic-bezier(.2,.7,.2,1); }
+.vincent-page.has-scroll-reveal .vincent-scroll-reveal:not(.is-visible) { opacity: 0; transform: translateY(22px); }
+@media (prefers-reduced-motion: reduce) {
+  .vincent-scroll-reveal { opacity: 1 !important; transform: none !important; transition: none !important; }
+}
 @media (prefers-reduced-motion: no-preference) {
   .vincent-header { transition: transform .2s ease; }
   .vincent-hero > * { animation: arrive .65s both; }
