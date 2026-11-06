@@ -191,8 +191,8 @@
 .vincent-project-copy p { margin: 0; color: var(--muted-ink); font-size: 14px; line-height: 1.8; }
 .vincent-project-visit { display: inline-flex; align-items: center; gap: 8px; margin-top: 18px; color: var(--blue-deep); font-size: 13px; font-weight: 600; text-decoration: none; }
 .vincent-project-visit:hover { text-decoration: underline; text-underline-offset: 4px; }
-.vincent-creative { --creative-paper: #f3f0e9; --creative-ink: #29282e; --creative-muted: #66636a; --creative-rule: #d7d2c8; --creative-accent: #a94931; position: relative; overflow: clip; background: var(--creative-paper); color: var(--creative-ink); }
-.dark .vincent-creative { --creative-paper: #242329; --creative-ink: #f7f5ef; --creative-muted: #c3c0bd; --creative-rule: #514f53; --creative-accent: #e88a68; }
+.vincent-creative { --creative-paper: var(--cream); --creative-ink: var(--ink); --creative-muted: var(--muted-ink); --creative-rule: var(--line); --creative-accent: var(--blue); position: relative; overflow: clip; background: var(--creative-paper); color: var(--creative-ink); }
+.dark .vincent-creative { --creative-paper: hsl(var(--background)); --creative-ink: hsl(var(--foreground)); --creative-muted: hsl(var(--muted-foreground)); --creative-rule: hsl(var(--border)); --creative-accent: hsl(var(--primary)); }
 .vincent-creative-inner { max-width: 1100px; margin: 0 auto; }
 .vincent-creative .vincent-section-label { color: var(--creative-accent); }
 .vincent-creative-heading { display: grid; grid-template-columns: minmax(0, .8fr) minmax(0, 1.2fr); column-gap: 9%; align-items: start; max-width: 1100px; margin: 0 auto 36px; }
@@ -222,7 +222,7 @@
 .vincent-craft-artwork { display: grid; min-width: 0; place-items: center; }
 .vincent-craft-editing { position: relative; width: 100%; max-width: 600px; }
 .vincent-edit-frame { position: relative; overflow: hidden; padding: 8px; border: 1px solid var(--creative-rule); background: var(--creative-ink); transform: rotate(-1deg); }
-.vincent-edit-frame video { display: block; width: 100%; aspect-ratio: 16 / 9; object-fit: cover; background: var(--creative-ink); }
+.vincent-edit-frame img { display: block; width: 100%; aspect-ratio: 16 / 9; object-fit: cover; background: var(--creative-ink); }
 .vincent-edit-frame-mark { position: absolute; right: 14px; bottom: 14px; padding: 4px 6px; background: var(--creative-paper); color: var(--creative-ink); font: 9px var(--app-font-sans); }
 .vincent-timeline-head, .vincent-sequencer-labels, .vincent-drum-footer { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
 .vincent-timeline-head { margin: 18px 0 10px; color: var(--creative-muted); font: 9px var(--app-font-sans); }

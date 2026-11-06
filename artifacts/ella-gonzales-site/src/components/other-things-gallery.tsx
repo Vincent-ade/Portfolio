@@ -47,8 +47,8 @@ const otherThings: OtherThing[] = [
     title: 'Photography',
     line: 'Looking closely at ordinary light and passing moments.',
     annotation: 'wait for the light',
-    mediaPath: '/images/vincent-homepage-portrait.jpg',
-    mediaAlt: 'Vincent in a leafy garden, a portrait from the current site',
+    mediaPath: '/images/photography.jpg',
+    mediaAlt: 'Close-up photograph of a hand wearing a diamond ring in warm light',
   },
 ];
 
