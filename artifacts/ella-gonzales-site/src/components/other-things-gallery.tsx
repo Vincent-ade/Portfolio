@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState, type PointerEvent } from 'react';
-import { motion, useMotionValue, useMotionValueEvent, useReducedMotion, useScroll, useTransform, type MotionValue } from 'framer-motion';
+import { motion, useMotionValueEvent, useReducedMotion, useScroll, useTransform, type MotionValue } from 'framer-motion';
 import { Volume2, VolumeX } from 'lucide-react';
 
 type DrumSound = 'kick' | 'snare' | 'hat';
@@ -144,7 +144,7 @@ function EditingVisual({
   );
 }
 
-function DesignVisual({ thing, progress }: { thing: OtherThing; progress: MotionValue<number> }) {
+function DesignVisual({ thing, progress, staticLayout }: { thing: OtherThing; progress: MotionValue<number>; staticLayout: boolean }) {
   const scale = useTransform(progress, [0, 1], [0.78, 1.04]);
   const rotate = useTransform(progress, [0, 1], [-3, 1.5]);
   const offsetY = useTransform(progress, [0, 1], [14, -8]);
@@ -155,7 +155,7 @@ function DesignVisual({ thing, progress }: { thing: OtherThing; progress: Motion
       <span className="vincent-crop-mark is-bottom-left" aria-hidden="true" /><span className="vincent-crop-mark is-bottom-right" aria-hidden="true" />
       <div className="vincent-design-grid" aria-hidden="true"><i /><i /><i /><i /><i /><i /></div>
       <div className="vincent-design-guides" aria-hidden="true"><span>BASELINE / 08</span><span>TYPE SCALE / 1.618</span><i /><i /></div>
-      <motion.span className="vincent-design-letter" aria-hidden="true" style={{ scale, rotate, y: offsetY }}>Aa</motion.span>
+      <motion.span className="vincent-design-letter" aria-hidden="true" style={staticLayout ? undefined : { scale, rotate, y: offsetY }}>Aa</motion.span>
       <div className="vincent-design-swatches" aria-label="Site color palette"><i /><i /><i /></div>
       <span className="vincent-design-annotation">{thing.annotation}</span>
     </div>
@@ -309,7 +309,7 @@ function ChapterArtwork({
   onJumpCut: () => void;
 }) {
   if (thing.kind === 'editing') return <EditingVisual thing={thing} progress={progress} active={active} staticLayout={staticLayout} onJumpCut={onJumpCut} />;
-  if (thing.kind === 'design') return <DesignVisual thing={thing} progress={progress} />;
+  if (thing.kind === 'design') return <DesignVisual thing={thing} progress={progress} staticLayout={staticLayout} />;
   if (thing.kind === 'music') return <DrumSequencer thing={thing} progress={progress} active={active} staticLayout={staticLayout} />;
   return <PhotographyVisual thing={thing} progress={progress} staticLayout={staticLayout} />;
 }
@@ -372,16 +372,18 @@ function CraftChapter({
 }
 
 function StaticCraftChapter({ thing, index, reduceMotion }: { thing: OtherThing; index: number; reduceMotion: boolean }) {
-  const progress = useMotionValue(1);
+  const chapterRef = useRef<HTMLElement>(null);
+  const { scrollYProgress: progress } = useScroll({ target: chapterRef, offset: ['start end', 'end start'] });
   const noJumpCut = () => undefined;
 
   return (
     <motion.article
+      ref={chapterRef}
       className={`vincent-craft-static-chapter is-${thing.kind}`}
       initial={reduceMotion ? false : { opacity: 0, y: 18 }}
       whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, amount: 0.16 }}
-      transition={{ duration: reduceMotion ? 0 : 0.5, delay: reduceMotion ? 0 : index * 0.07 }}
+      viewport={{ once: true, amount: 0.28 }}
+      transition={{ duration: reduceMotion ? 0 : 0.52, delay: reduceMotion ? 0 : index * 0.12 }}
     >
       <div className="vincent-static-chapter-copy">
         <span className="vincent-craft-index">{thing.index} <span>/ 04</span></span>
@@ -390,7 +392,7 @@ function StaticCraftChapter({ thing, index, reduceMotion }: { thing: OtherThing;
         <span className="vincent-craft-annotation">{thing.annotation}</span>
       </div>
       <div className="vincent-craft-static-artwork">
-        <ChapterArtwork thing={thing} progress={progress} active staticLayout onJumpCut={noJumpCut} />
+        <ChapterArtwork thing={thing} progress={progress} active staticLayout={reduceMotion} onJumpCut={noJumpCut} />
       </div>
     </motion.article>
   );
@@ -412,7 +414,6 @@ export function OtherThingsGallery() {
   const [jumpCut, setJumpCut] = useState(false);
   const reduceMotion = Boolean(useReducedMotion());
   const staticLayout = reduceMotion || isMobile;
-  const staticProgress = useMotionValue(1);
   const { scrollYProgress } = useScroll({ target: trackRef, offset: ['start start', 'end end'] });
   const { scrollYProgress: introProgress } = useScroll({ target: headingRef, offset: ['start 0.92', 'center 0.48'] });
   const headingClip = useTransform(introProgress, [0, 0.9], ['inset(0 100% 0 0)', 'inset(0)']);
