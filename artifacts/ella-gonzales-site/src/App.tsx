@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { ArrowRight, ChevronLeft, ChevronRight, ExternalLink, Github, Menu, Move, RotateCcw, Search, X } from 'lucide-react';
 import { useLocation } from 'wouter';
+import { OtherThingsGallery } from '@/components/other-things-gallery';
 
 type Resource = {
   category: 'Career prep' | 'Internships' | 'Building';
@@ -454,6 +455,8 @@ function App() {
             </div>
             <ProjectCarousel />
           </section>
+
+          <OtherThingsGallery />
 
           <section className="vincent-newsletter vincent-scroll-reveal" id="newsletter">
             <div className="vincent-newsletter-inner">
