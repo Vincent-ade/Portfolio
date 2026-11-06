@@ -280,7 +280,7 @@
 .vincent-sound-toggle:disabled { opacity: .6; cursor: not-allowed; }
 .vincent-drum-annotation { display: block; margin-top: 16px; color: var(--creative-accent); font: italic 13px var(--app-font-serif); transform: rotate(-2deg); }
 .vincent-photo-rig { width: min(100%, 500px); padding: 10px 15px 16px 10px; }
-.vincent-photo-print { position: relative; overflow: hidden; width: min(100%, 320px); margin-inline: auto; aspect-ratio: 2 / 3; padding: 8px; border: 1px solid var(--creative-rule); background: var(--creative-paper); box-shadow: 9px 10px 0 var(--creative-rule); transform: rotate(-1.7deg); }
+.vincent-photo-print { position: relative; overflow: hidden; width: 100%; aspect-ratio: 4 / 3; padding: 8px; border: 1px solid var(--creative-rule); background: var(--creative-paper); box-shadow: 9px 10px 0 var(--creative-rule); transform: rotate(-1.7deg); }
 .vincent-photo-print img { display: block; width: 100%; height: 100%; object-fit: cover; }
 .vincent-photo-light-leak { position: absolute; top: 2%; right: 3%; width: 42%; aspect-ratio: 1; border-radius: 50%; background: var(--creative-accent); filter: blur(28px); pointer-events: none; }
 .vincent-photo-grain { position: absolute; inset: 8px; width: calc(100% - 16px); height: calc(100% - 16px); opacity: .16; mix-blend-mode: soft-light; pointer-events: none; }
