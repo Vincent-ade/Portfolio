@@ -435,6 +435,14 @@ function App() {
             </div>
           </section>
 
+          <section className="vincent-section vincent-projects vincent-scroll-reveal" id="projects" aria-labelledby="projects-heading">
+            <div className="vincent-projects-heading">
+              <p className="vincent-section-label">Selected projects</p>
+              <div><TypewriterHeading /><p>Ideas become more real when you make something with them.</p></div>
+            </div>
+            <ProjectCarousel />
+          </section>
+
           <section className="vincent-section vincent-ethos" id="cohort">
             <CohortVideoStage />
             <div className="vincent-ethos-inner">
@@ -446,14 +454,6 @@ function App() {
                 <a className="vincent-button vincent-ethos-action" href="https://forms.gle/fi1YQCTBT9K2rvu69" target="_blank" rel="noopener noreferrer">Apply to Cohort Creator Lab <ExternalLink aria-hidden="true" /></a>
               </div>
             </div>
-          </section>
-
-          <section className="vincent-section vincent-projects vincent-scroll-reveal" id="projects" aria-labelledby="projects-heading">
-            <div className="vincent-projects-heading">
-              <p className="vincent-section-label">Selected projects</p>
-              <div><TypewriterHeading /><p>Ideas become more real when you make something with them.</p></div>
-            </div>
-            <ProjectCarousel />
           </section>
 
           <OtherThingsGallery />
