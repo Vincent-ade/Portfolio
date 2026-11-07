@@ -413,7 +413,7 @@ export function OtherThingsGallery() {
   const [cursorVisible, setCursorVisible] = useState(false);
   const [jumpCut, setJumpCut] = useState(false);
   const reduceMotion = Boolean(useReducedMotion());
-  const staticLayout = reduceMotion || isMobile;
+  const staticLayout = reduceMotion;
   const { scrollYProgress } = useScroll({ target: trackRef, offset: ['start start', 'end end'] });
   const { scrollYProgress: introProgress } = useScroll({ target: headingRef, offset: ['start 0.92', 'center 0.48'] });
   const headingClip = useTransform(introProgress, [0, 0.9], ['inset(0 100% 0 0)', 'inset(0)']);
@@ -439,7 +439,7 @@ export function OtherThingsGallery() {
   }, []);
 
   const handlePointerMove = (event: PointerEvent<HTMLElement>) => {
-    if (staticLayout || event.pointerType !== 'mouse') return;
+    if (isMobile || staticLayout || event.pointerType !== 'mouse') return;
     const section = sectionRef.current;
     if (!section) return;
 
@@ -475,7 +475,7 @@ export function OtherThingsGallery() {
       className={`vincent-section vincent-creative${staticLayout ? ' is-static' : ''}`}
       id="creative"
       aria-labelledby="creative-heading"
-      onPointerEnter={(event) => { if (!staticLayout && event.pointerType === 'mouse') setCursorVisible(true); }}
+      onPointerEnter={(event) => { if (!isMobile && !staticLayout && event.pointerType === 'mouse') setCursorVisible(true); }}
       onPointerMove={handlePointerMove}
       onPointerLeave={() => setCursorVisible(false)}
     >
@@ -509,7 +509,7 @@ export function OtherThingsGallery() {
           </div>
         )}
       </div>
-      <div ref={cursorRef} className={`vincent-craft-cursor${cursorVisible && !staticLayout ? ' is-visible' : ''}`} aria-hidden="true"><span>{cursorLabel}</span></div>
+      <div ref={cursorRef} className={`vincent-craft-cursor${cursorVisible && !isMobile && !staticLayout ? ' is-visible' : ''}`} aria-hidden="true"><span>{cursorLabel}</span></div>
     </section>
   );
 }

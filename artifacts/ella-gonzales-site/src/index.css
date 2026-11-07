@@ -309,10 +309,45 @@
   .vincent-creative button { cursor: none; }
 }
 @media (max-width: 760px) {
-  .vincent-craft-scroll-track, .vincent-craft-cursor { display: none; }
+  .vincent-craft-cursor { display: none; }
   .vincent-creative-heading { grid-template-columns: minmax(0, 1fr); row-gap: 0; margin-bottom: 22px; }
   .vincent-creative-heading .vincent-section-label, .vincent-creative-heading h2, .vincent-creative-heading .vincent-creative-intro { grid-column: 1; grid-row: auto; }
   .vincent-creative-heading h2 { max-width: 100%; font-size: 38px; }
+  .vincent-craft-pin { top: 73px; height: max(520px, calc(100svh - 73px)); min-height: 0; }
+  .vincent-craft-pin-inner { gap: 9px; padding-bottom: 0; }
+  .vincent-craft-status { font-size: 8px; }
+  .vincent-craft-current { gap: 5px; font-size: 10px; }
+  .vincent-craft-current b { font-size: 14px; }
+  .vincent-craft-current i { display: none; }
+  .vincent-craft-chapter { grid-template-columns: minmax(0, 1fr); grid-template-rows: auto minmax(0, 1fr); align-content: start; gap: 5px; padding: 12px 8px; }
+  .vincent-craft-index { gap: 5px; font-size: clamp(46px, 15vw, 62px); }
+  .vincent-craft-index span { font-size: 9px; }
+  .vincent-craft-copy h3 { max-width: 100%; margin: 8px 0 5px; font-size: clamp(22px, 6.8vw, 30px); }
+  .vincent-craft-copy > p { max-width: 36ch; font-size: 12px; line-height: 1.55; }
+  .vincent-craft-annotation { margin-top: 7px; font-size: 12px; }
+  .vincent-craft-artwork { align-content: start; }
+  .vincent-craft-editing { max-width: none; }
+  .vincent-edit-frame { padding: 4px; }
+  .vincent-edit-frame-mark { right: 8px; bottom: 8px; padding: 3px 4px; font-size: 7px; }
+  .vincent-timeline-head { gap: 6px; margin: 8px 0 5px; font-size: 7px; }
+  .vincent-film-timeline { gap: 4px; padding: 5px 5px 7px; }
+  .vincent-timeline-ruler { padding-left: 25px; font-size: 7px; }
+  .vincent-timeline-row { grid-template-columns: 21px minmax(0, 1fr); gap: 4px; font-size: 7px; }
+  .vincent-timeline-track { height: 13px; }
+  .vincent-playhead { right: 5px; bottom: 3px; left: 25px; }
+  .vincent-design-board { width: min(100%, 510px); max-height: 100%; }
+  .vincent-design-letter { font-size: clamp(96px, 35vw, 145px); }
+  .vincent-drum-machine { max-width: none; }
+  .vincent-sequencer-labels { margin-bottom: 7px; font-size: 8px; }
+  .vincent-sequencer { gap: 4px; padding: 2px 2px 8px; }
+  .vincent-sequencer-pad { min-width: 32px; min-height: 38px; }
+  .vincent-drum-footer { gap: 6px; }
+  .vincent-drum-hint { font-size: 11px; }
+  .vincent-sound-toggle { min-height: 38px; padding: 0 8px; }
+  .vincent-photo-rig { width: min(100%, 300px); padding: 5px 10px 9px 5px; }
+  .vincent-photo-print { padding: 5px; }
+  .vincent-photo-grain { inset: 5px; width: calc(100% - 10px); height: calc(100% - 10px); }
+  .vincent-exposure { right: 10px; bottom: 9px; left: 10px; font-size: 8px; }
   .vincent-craft-static-chapter { grid-template-columns: minmax(0, 1fr); gap: 20px; padding: 28px 0; }
   .vincent-static-chapter-copy .vincent-craft-index { font-size: 48px; }
   .vincent-static-chapter-copy h3 { margin: 14px 0 8px; font-size: 25px; }
