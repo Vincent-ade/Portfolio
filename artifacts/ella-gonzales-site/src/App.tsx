@@ -88,7 +88,7 @@ function ResourceLibrary() {
       </div>
       <div className="vincent-roadmap">
         <div><small>Coming together now</small><h3>A more human roadmap into tech.</h3><p>A guided collection of the steps I wish I could hand my past self: choosing a direction, building proof, and finding people who get it.</p></div>
-        <a className="vincent-button" href="https://cs-roadmap-waitlist.vincentalanagonzales.chatgpt.site/" target="_blank" rel="noopener noreferrer">Join the early list <ArrowRight aria-hidden="true" /></a>
+        <a className="vincent-button" href="https://vincentintershiproadmap.lovable.app/" target="_blank" rel="noopener noreferrer">Join the early list <ArrowRight aria-hidden="true" /></a>
       </div>
     </section>
   );
@@ -414,7 +414,7 @@ function App() {
               <a className="vincent-social-link" href="mailto:dadaademolav@gmail.com" aria-label="Email Vincent" data-testid="link-email-social"><SocialIcon kind="mail" /></a>
             </div>
             <p className="vincent-kicker">A little corner of the internet</p>
-            <h1 id="hero-heading">Hi, I’m Vincent. <span>Glad you’re here.</span></h1>
+            <h1 id="hero-heading">Welcome, I'm <span>Vincent</span></h1>
             <p className="vincent-hero-copy">I’m a creator, curious technologist, and work-in-progress. I share the resources and experiments that helped me find my way into tech — in case they help you find yours, too.</p>
             <a className="vincent-button" href="#about">A little about me <ArrowRight aria-hidden="true" /></a>
             <button className={`vincent-portrait-wrap${portraitAlt ? ' is-alt' : ''}`} type="button" aria-label="Switch portrait photo" aria-pressed={portraitAlt} onClick={() => setPortraitAlt((showAlternate) => !showAlternate)}>
@@ -456,8 +456,6 @@ function App() {
             </div>
           </section>
 
-          <OtherThingsGallery />
-
           <section className="vincent-newsletter vincent-scroll-reveal" id="newsletter">
             <div className="vincent-newsletter-inner">
               <div><p className="vincent-section-label">A note from me to you</p><h2>Good things take a few drafts.</h2><p className="vincent-newsletter-copy">A short, occasional letter with new resources, honest lessons, and little things I’m making. No noise; just something useful to take with you.</p></div>
@@ -467,6 +465,8 @@ function App() {
               </div>
             </div>
           </section>
+
+          <OtherThingsGallery />
 
           <section className="vincent-section vincent-work vincent-scroll-reveal" id="work">
             <div><p className="vincent-section-label">Work with me</p><h2>Let’s make something that helps someone begin.</h2></div>
