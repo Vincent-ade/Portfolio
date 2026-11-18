@@ -32,7 +32,6 @@ const resources: Resource[] = [
   { category: 'Internships', title: 'Internship Log', description: 'Reflect on what you are learning and make your growth easier to see over time.', type: 'Journal', url: 'https://docs.google.com/document/d/1BV9VJ4AaFmO-Yc01IDLRfFRMWeaRhx3JsZqnEvAW0zA/edit?usp=sharing' },
   { category: 'Internships', title: 'How to Ask for a Return Offer', description: 'Prepare for a clear, confident conversation about your work and what could come next.', type: 'Conversation guide', url: 'https://docs.google.com/document/d/1lhWlUpGNinsgwUFNeZApHFLb8j8N3myB/edit?usp=sharing' },
   { category: 'Internships', title: 'The Return Offer Playbook', description: 'A practical playbook for building momentum toward your next opportunity during an internship.', type: 'Playbook', url: 'https://docs.google.com/document/d/1-XE0mBQPqzIxMo9bSJIWJS9tQm7T2uSz/edit?usp=sharing' },
-  { category: 'Career prep', title: 'Women in Tech Resources', description: 'Communities and resources to help women find support, mentorship, and room to grow in tech.', type: 'Resource list', url: 'https://docs.google.com/document/d/17oDNMONFSaYg3WVf4vRSAOUp3EMeQiu3/edit?usp=sharing' },
 ];
 
 const categories = ['Everything', 'Career prep', 'Internships', 'Building'];
@@ -397,7 +396,7 @@ function App() {
           <nav id="main-navigation" className={`vincent-nav${menuOpen ? ' open' : ''}`} aria-label="Main navigation">
             <a onClick={closeMenu} href={sectionHref('about')}>About</a>
             <a onClick={closeMenu} href={sectionHref('cohort')}>Cohort</a>
-            <a onClick={closeMenu} href="/resources" aria-current={isResourcesPage ? 'page' : undefined}>Resources</a>
+            {/* <a onClick={closeMenu} href="/resources" aria-current={isResourcesPage ? 'page' : undefined}>Resources</a> */}
             <a onClick={closeMenu} href={sectionHref('work')}>Work with me</a>
             <a className="vincent-nav-cta" onClick={closeMenu} href={SUBSTACK} target="_blank" rel="noopener noreferrer">Get the newsletter</a>
           </nav>
