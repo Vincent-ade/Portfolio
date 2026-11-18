@@ -414,7 +414,7 @@ function App() {
             </div>
             <p className="vincent-kicker">A little corner of the internet</p>
             <h1 id="hero-heading">Welcome, I'm <span>Vincent</span></h1>
-            <p className="vincent-hero-copy">I’m a creator, curious technologist, and work-in-progress. I share the resources and experiments that helped me find my way into tech — in case they help you find yours, too.</p>
+            <p className="vincent-hero-copy">I’m a software builder and computer science student. I turn ideas into deployed apps, and this is where I share the projects and resources behind them.</p>
             <a className="vincent-button" href="#about">A little about me <ArrowRight aria-hidden="true" /></a>
             <button className={`vincent-portrait-wrap${portraitAlt ? ' is-alt' : ''}`} type="button" aria-label="Switch portrait photo" aria-pressed={portraitAlt} onClick={() => setPortraitAlt((showAlternate) => !showAlternate)}>
               <span className="vincent-portrait-stack">
@@ -428,8 +428,8 @@ function App() {
           <section className="vincent-section vincent-about vincent-scroll-reveal" id="about">
             <div><p className="vincent-section-label">A bit about me</p><h2>Tech didn’t feel like a place for me. Then I made it one.</h2></div>
             <div className="vincent-about-copy">
-              <p>I’m Vincent — a creator and builder who took the scenic route into technology. I know what it feels like to be interested in a thousand things and still wonder whether you belong in the room.</p>
-              <p>The turning point wasn’t one big breakthrough. It was asking better questions, finding generous people, and making little things before I felt ready. Now I’m sharing those notes as I go: what worked, what didn’t, and what I’m still figuring out.</p>
+              <p>I’m Vincent, a builder who learns by doing. I’ve always been curious about how things work, and I started making things long before I felt qualified to.</p>
+              <p>What's helped most is building real projects, asking questions, and learning from people further along. Now I share those lessons openly: what worked, what didn’t, and what I’m still working out. This site is where I share the work and the lessons behind it.</p>
               <p className="vincent-signoff">No perfect roadmap. Just a few good next steps.</p>
             </div>
           </section>
