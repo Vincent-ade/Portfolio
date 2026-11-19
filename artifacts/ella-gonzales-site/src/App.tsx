@@ -414,7 +414,7 @@ function App() {
             </div>
             <p className="vincent-kicker">A little corner of the internet</p>
             <h1 id="hero-heading">Welcome, I'm <span>Vincent</span></h1>
-            <p className="vincent-hero-copy">I’m a software builder and computer science student. I turn ideas into deployed apps, and this is where I share the projects and resources behind them.</p>
+            <p className="vincent-hero-copy">I’m a computer science student who turns ideas into deployed apps, and this is where I share the projects and resources behind them.</p>
             <a className="vincent-button" href="#about">A little about me <ArrowRight aria-hidden="true" /></a>
             <button className={`vincent-portrait-wrap${portraitAlt ? ' is-alt' : ''}`} type="button" aria-label="Switch portrait photo" aria-pressed={portraitAlt} onClick={() => setPortraitAlt((showAlternate) => !showAlternate)}>
               <span className="vincent-portrait-stack">
